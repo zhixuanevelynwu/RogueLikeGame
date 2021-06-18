@@ -45,7 +45,7 @@ class Monster(view.Enemy):
 
         self.end = end
         self.path = [x, end]
-        self.vel = 3
+        self.vel = 1
 
 
         self.race = race
