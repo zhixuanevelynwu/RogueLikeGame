@@ -14,16 +14,14 @@ def main():
     background = pygame.image.load('image/bg.png').convert()
     # create hero and monster, and set monster location
     hero = model.Player('Adam')
-    monster1 = model.Monster('monster', 0)
-    monster1.rect.x = 200
-    monster1.rect.y = 200
-    monster2 = model.Monster('monster', 0)
-    monster2.rect.x = 400
-    monster2.rect.y = 400
-    monster3 = model.Monster('monster', 0)
-    monster3.rect.x = 300
-    monster3.rect.y = 300
-    speed = 1
+    monster1 = model.Monster(200, 200, 640, 'monster', 0)
+
+    monster2 = model.Monster(400, 400, 640, 'monster', 0)
+
+    monster3 = model.Monster(300, 300, 640, 'monster', 0)
+
+    clock = pygame.time.Clock()
+    speed = 4
 
     player_list = pygame.sprite.Group()
     player_list.add(hero)
@@ -33,7 +31,11 @@ def main():
     monster_list.add(monster2)
     monster_list.add(monster3)
 
+    """game loop"""
     while True:
+
+        clock.tick(60)
+
         quit, up, down, left, right, up_up, down_up, left_up, right_up = controller.KeyEvents.check_events()
         if quit:
             break
@@ -67,6 +69,19 @@ def main():
             player_list, monster_list, False, True, collided=pygame.sprite.collide_circle)
         surface.blit(background, (0, 0))
         player_list.draw(surface)
+
+        monster1.update()
+        monster1.rect.x = monster1.x
+        monster1.rect.y = monster1.y
+
+        monster2.update()
+        monster2.rect.x = monster2.x
+        monster2.rect.y = monster2.y
+
+        monster3.update()
+        monster3.rect.x = monster3.x
+        monster3.rect.y = monster3.y
+
         monster_list.draw(surface)
         pygame.display.flip()
 
