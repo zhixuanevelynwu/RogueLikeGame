@@ -3,6 +3,8 @@ import random
 import view
 
 """ start player classes """
+
+
 class Player(view.Hero):
     def __init__(self, name):
         view.Hero.__init__(self)
@@ -33,9 +35,13 @@ class Player(view.Hero):
 
     def isDead(self):
         pass
+
+
 """ end player classes """
 
 """ start monster classes """
+
+
 class Monster(view.Enemy):
 
     def __init__(self, x, y, end, race, gold):
@@ -45,14 +51,14 @@ class Monster(view.Enemy):
 
         self.end = end
         self.path = [x, end]
-        self.vel = 1
-
+        self.vel = 3
 
         self.race = race
         self.attack = roll_3_dice()
         self.health = roll_3_dice()
         self.gold = gold
 
+        self.choose_direction()
         self.move()
 
     def __str__(self):
@@ -66,16 +72,37 @@ class Monster(view.Enemy):
         pass
 
     def move(self):
-        if self.vel > 0:
-            if self.x + self.vel < self.path[1]:
-                self.x += self.vel
+        if self.direction == 0:
+            if self.vel > 0:
+                if self.x + self.vel < self.path[1]:
+                    self.x += self.vel
+                else:
+                    self.vel = self.vel * -1
             else:
-                self.vel = self.vel * -1
+                if self.x - self.vel > self.path[0]:
+                    self.x += self.vel
+                else:
+                    self.vel = self.vel * -1
+                    self.choose_direction()
         else:
-            if self.x - self.vel > self.path[0]:
-                self.x += self.vel
+            if self.vel > 0:
+                if self.y + self.vel < self.path[1]:
+                    self.y += self.vel
+                else:
+                    self.vel = self.vel * -1
             else:
-                self.vel = self.vel * -1
+                if self.y - self.vel > self.path[0]:
+                    self.y += self.vel
+                else:
+                    self.vel = self.vel * -1
+                    self.choose_direction()
+
+    def choose_direction(self):
+        if random.random() > 0.5:
+            self.direction = 0
+        else:
+            self.direction = 1
+
 
     def update(self, *args, **kwargs) -> None:
         self.move()
@@ -109,11 +136,13 @@ class Monster(view.Enemy):
 def main():
     pass
 
+
 def roll_3_dice():
     total = 0
     for _ in range(3):
         total += random.randrange(1, 7)
     return total
+
 
 if __name__ == "__main__":
     main()

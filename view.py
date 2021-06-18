@@ -24,7 +24,7 @@ def main():
 
     monster_list = pygame.sprite.Group()
     for i in range(random.randint(3, 6)):
-        monster = model.Monster(random.randint(40, 600), random.randint(40, 600), 640, 'monster', 0)
+        monster = model.Monster(random.randint(50, window_size_x-50), random.randint(40, window_size_y - 50), 640, 'monster', 0)
         monster_list.add(monster)
 
     """game loop"""
