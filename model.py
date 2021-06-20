@@ -48,8 +48,6 @@ class Monster(view.Enemy):
         self.vel = 1
 
 
-    def __init__(self, race, gold):
-        view.Enemy.__init__(self)
         self.race = race
         self.attack = roll_3_dice()
         self.health = roll_3_dice()
@@ -107,31 +105,6 @@ class Monster(view.Enemy):
 #         pass
 #
 # """ end monster classes """
-
-class Eyeball(Monster):
-    """
-        killing an eyeball rewards player 5 gold
-    """
-
-    def __init__(self):
-        Monster.__init__(self, "eyeball", 5)
-        self.yell = '"SsSsSSss"'
-
-    def __str__(self):
-        pass
-
-class Slime(Monster):
-    """
-        killing a slime rewards player 6 gold
-    """
-    def __init__(self):
-        Monster.__init__(self, "Slime", 6)
-        self.yell = '"#%@&$/?!"'
-
-    def __str__(self):
-        pass
-
-""" end monster classes """
 
 def main():
     pass

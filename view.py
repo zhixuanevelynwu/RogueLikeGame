@@ -18,16 +18,6 @@ def main():
 
     clock = pygame.time.Clock()
     speed = 4
-    monster1 = model.Monster('monster', 0)
-    monster1.rect.x = 200
-    monster1.rect.y = 200
-    monster2 = model.Monster('monster', 0)
-    monster2.rect.x = 400
-    monster2.rect.y = 400
-    monster3 = model.Monster('monster', 0)
-    monster3.rect.x = 300
-    monster3.rect.y = 300
-    speed = 1
 
     player_list = pygame.sprite.Group()
     player_list.add(hero)
@@ -42,11 +32,6 @@ def main():
 
         clock.tick(60)
 
-    monster_list.add(monster1)
-    monster_list.add(monster2)
-    monster_list.add(monster3)
-
-    while True:
         quit, up, down, left, right, up_up, down_up, left_up, right_up = controller.KeyEvents.check_events()
         if quit:
             break
@@ -74,20 +59,6 @@ def main():
         if right_up:
             hero.move(-speed, 0)
             hero.end_anim()
-        if up_up:
-            hero.move(0, speed)
-        if down:
-            hero.move(0, speed)
-        if down_up:
-            hero.move(0, -speed)
-        if left:
-            hero.move(-speed, 0)
-        if left_up:
-            hero.move(speed, 0)
-        if right:
-            hero.move(speed, 0)
-        if right_up:
-            hero.move(-speed, 0)
 
         hero.update()
         pygame.sprite.groupcollide(
@@ -115,9 +86,6 @@ class Hero(pygame.sprite.Sprite):
         self.sprites.append(pygame.image.load('image/hero_f3.png'))
         self.current = 0
         self.image = self.sprites[self.current]
-
-        self.image = pygame.image.load('image/hero.png').convert()
-
         self.image.set_colorkey((0, 0, 0))
         self.rect = self.image.get_rect()
         self.movex = 0
@@ -144,9 +112,6 @@ class Hero(pygame.sprite.Sprite):
                 self.current = 0
 
             self.image = self.sprites[int(self.current)]
-    def update(self):
-        self.rect.x = self.rect.x + self.movex
-        self.rect.y = self.rect.y + self.movey
 
 
 class Enemy(pygame.sprite.Sprite):
@@ -158,10 +123,6 @@ class Enemy(pygame.sprite.Sprite):
         else:
             self.image = pygame.image.load('image/monster2.png').convert()
 
-        if random.randint(0, 1) == 0:
-            self.image = pygame.image.load('image/monster1.png').convert()
-        else:
-            self.image = pygame.image.load('image/monster2.png').convert()
         self.image.set_colorkey((0, 0, 0))
         self.rect = self.image.get_rect()
 
