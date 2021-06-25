@@ -1,45 +1,26 @@
 #! /usr/bin/env python3
 import random
-import view
+import pygame
 
 """ start player classes """
-class Player(view.Hero):
-    def __init__(self, name):
-        view.Hero.__init__(self)
-        """ Initialize with a name.  Rolls dice for ST/IN"""
-        self.name = name
-        self.health = 50
-        self.weapon = False
-        self.gold = 0
+class Enemy(pygame.sprite.Sprite):
 
-    def __str__(self):
-        s = f'{self.name} has HLTH:{self.health}'
-        if self.weapon:
-            s += f'\n  Wielding a {self.weapon.name}'
-        return s
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        if random.random() < 0.5:
+            self.image = pygame.image.load('image/pink_monster_l.png').convert()
+        else:
+            self.image = pygame.image.load('image/blue_monster_l.png').convert()
 
-    def get_gold(self, gold):
-        """Call when player finds gold"""
-        self.gold += gold
+        self.image.set_colorkey((0, 0, 0))
+        self.rect = self.image.get_rect()
 
-    def arm(self, weapon=False):
-        """Put on a weapon.  Call disarm to take off."""
-        if not self.weapon:
-            self.weapon = weapon
 
-    def attack(self, monster):
-        """atacks a monster"""
-        pass
 
-    def isDead(self):
-        pass
-""" end player classes """
-
-""" start monster classes """
-class Monster(view.Enemy):
+class Monster(Enemy):
 
     def __init__(self, x, y, end, race, gold):
-        view.Enemy.__init__(self)
+        Enemy.__init__(self)
         self.x = x
         self.y = y
 
@@ -48,8 +29,6 @@ class Monster(view.Enemy):
         self.vel = 1
 
 
-    def __init__(self, race, gold):
-        view.Enemy.__init__(self)
         self.race = race
         self.attack = roll_3_dice()
         self.health = roll_3_dice()
@@ -108,39 +87,16 @@ class Monster(view.Enemy):
 #
 # """ end monster classes """
 
-class Eyeball(Monster):
-    """
-        killing an eyeball rewards player 5 gold
-    """
-
-    def __init__(self):
-        Monster.__init__(self, "eyeball", 5)
-        self.yell = '"SsSsSSss"'
-
-    def __str__(self):
-        pass
-
-class Slime(Monster):
-    """
-        killing a slime rewards player 6 gold
-    """
-    def __init__(self):
-        Monster.__init__(self, "Slime", 6)
-        self.yell = '"#%@&$/?!"'
-
-    def __str__(self):
-        pass
-
-""" end monster classes """
-
 def main():
     pass
+
 
 def roll_3_dice():
     total = 0
     for _ in range(3):
         total += random.randrange(1, 7)
     return total
+
 
 if __name__ == "__main__":
     main()
