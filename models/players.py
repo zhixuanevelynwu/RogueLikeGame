@@ -13,6 +13,7 @@ class Player(pygame.sprite.Sprite):
         self.sprites.append(pygame.image.load('image/hero_f1.png'))
         self.sprites.append(pygame.image.load('image/hero_f2.png'))
         self.sprites.append(pygame.image.load('image/hero_f3.png'))
+        self.out_of_pic = False
         self.current = 0
         self.image = self.sprites[self.current]
         self.image.set_colorkey((0, 0, 0))
@@ -82,8 +83,10 @@ class Player(pygame.sprite.Sprite):
             self.current += 0.1
             if self.current >= len(self.sprites):
                 self.current = 0
-
             self.image = self.sprites[int(self.current)]
+        if self.rect.x > 1024 or self.rect.y > 768:
+            self.out_of_pic = True
+            # print(self.out_of_pic)
 
 
 def main():
