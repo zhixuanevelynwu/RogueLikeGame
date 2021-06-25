@@ -3,18 +3,21 @@ import random
 import pygame
 
 """ start player classes """
+
+
 class Enemy(pygame.sprite.Sprite):
 
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         if random.random() < 0.5:
-            self.image = pygame.image.load('image/pink_monster_l.png').convert()
+            self.image = pygame.image.load(
+                'image/pink_monster_l.png').convert()
         else:
-            self.image = pygame.image.load('image/blue_monster_l.png').convert()
+            self.image = pygame.image.load(
+                'image/blue_monster_l.png').convert()
 
         self.image.set_colorkey((0, 0, 0))
         self.rect = self.image.get_rect()
-
 
 
 class Monster(Enemy):
@@ -27,7 +30,6 @@ class Monster(Enemy):
         self.end = end
         self.path = [x, end]
         self.vel = 1
-
 
         self.race = race
         self.attack = roll_3_dice()
@@ -58,8 +60,19 @@ class Monster(Enemy):
             else:
                 self.vel = self.vel * -1
 
-    def update(self, *args, **kwargs) -> None:
-        self.move()
+    def approach_player(self, x, y):
+        if self.x - x > 0:
+            self.x -= self.vel
+        elif self.x - x <= 0:
+            self.x += self.vel
+        if self.y - y > 0:
+            self.y -= self.vel
+        elif self.y - y <= 0:
+            self.y += self.vel
+
+    def update(self, x, y) -> None:
+        # self.move()
+        self.approach_player(x, y)
 
 
 # class Eyeball(Monster):
