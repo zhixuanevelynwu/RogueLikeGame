@@ -9,12 +9,23 @@ class Enemy(pygame.sprite.Sprite):
 
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        if random.random() < 0.5:
+
+        rand_monster = random.randint(1, 5)
+        if rand_monster == 1:
             self.image = pygame.image.load(
                 'image/pink_monster_l.png').convert()
-        else:
+        elif rand_monster == 2:
             self.image = pygame.image.load(
                 'image/blue_monster_l.png').convert()
+        elif rand_monster == 3:
+            self.image = pygame.image.load(
+                'image/red_monster_l.png').convert()
+        elif rand_monster == 4:
+            self.image = pygame.image.load(
+                'image/slime_monster.png').convert()
+        elif rand_monster == 5:
+            self.image = pygame.image.load(
+                'image/eyeball_monster.png').convert()
 
         self.image.set_colorkey((0, 0, 0))
         self.rect = self.image.get_rect()

@@ -22,12 +22,14 @@ def rand_scene(bg_list):
 
 def main():
     pygame.init()
-    window_size_x = 640
-    window_size_y = 640
+
+    window_size_x = 1024
+    window_size_y = 768
     surface = pygame.display.set_mode([window_size_x, window_size_y])
     pygame.display.set_caption('Demo')
 
-    bg_list = ['image/bg.png', 'image/bg2.png', 'image/bg3.png']
+    bg_list = ['image/bg1.png', 'image/bg2.png', 'image/bg3.png']
+
     (background, monster_list, last) = rand_scene(bg_list)
 
     # create hero1 and monster, and set monster location
