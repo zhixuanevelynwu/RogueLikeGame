@@ -31,21 +31,16 @@ class Enemy(pygame.sprite.Sprite):
 
 class Monster(Enemy):
 
-    def __init__(self, x, y, end, race, gold):
+    def __init__(self, x, y, race, gold):
         Enemy.__init__(self)
         self.x = x
         self.y = y
-
-        self.end = end
-        self.path = [x, end]
         self.vel = 1
 
         self.race = race
         self.attack = roll_3_dice()
         self.health = roll_3_dice()
         self.gold = gold
-
-        self.move()
 
     def __str__(self):
         s = f'Encounter Monster {self.race} with ATK:{self.attack} HLTH:{self.health}'
@@ -56,18 +51,6 @@ class Monster(Enemy):
 
     def isDead(self):
         pass
-
-    def move(self):
-        if self.vel > 0:
-            if self.x + self.vel < self.path[1]:
-                self.x += self.vel
-            else:
-                self.vel = self.vel * -1
-        else:
-            if self.x - self.vel > self.path[0]:
-                self.x += self.vel
-            else:
-                self.vel = self.vel * -1
 
     def approach_player(self, x, y):
         if self.x - x > 0:
@@ -80,7 +63,6 @@ class Monster(Enemy):
             self.y += self.vel
 
     def update(self, x, y) -> None:
-        # self.move()
         self.approach_player(x, y)
 
 
@@ -116,7 +98,7 @@ def main():
 def roll_3_dice():
     total = 0
     for _ in range(3):
-        total += random.randrange(1, 7)
+        total += random.randrange(1, 4)
     return total
 
 
