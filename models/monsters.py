@@ -9,6 +9,7 @@ class Enemy(pygame.sprite.Sprite):
 
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
+
         rand_monster = random.randint(1, 5)
         if rand_monster == 1:
             self.image = pygame.image.load(
@@ -25,6 +26,7 @@ class Enemy(pygame.sprite.Sprite):
         elif rand_monster == 5:
             self.image = pygame.image.load(
                 'image/eyeball_monster.png').convert()
+
         self.image.set_colorkey((0, 0, 0))
         self.rect = self.image.get_rect()
 
