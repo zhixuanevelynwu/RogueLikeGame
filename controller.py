@@ -1,11 +1,13 @@
 import pygame
 
+
 class Collision:
     '''
         Collision class
             implements functions relevant to collision checking
     '''
     pass
+
 
 class KeyEvents:
     '''
@@ -19,6 +21,8 @@ class KeyEvents:
         quit = False
         up = down = left = right = False
         up_up = down_up = left_up = right_up = False
+        attack = False
+        dash = dash_up = False
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 quit = True
@@ -35,6 +39,10 @@ class KeyEvents:
                     left = True
                 if event.key == pygame.K_d:
                     right = True
+                if event.key == pygame.K_k:
+                    attack = True
+                if event.key == pygame.K_SPACE:
+                    dash = True
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_w:
                     up_up = True
@@ -44,4 +52,8 @@ class KeyEvents:
                     left_up = True
                 if event.key == pygame.K_d:
                     right_up = True
-        return quit, up, down, left, right, up_up, down_up, left_up, right_up
+                if event.key == pygame.K_k:
+                    attack = False
+                if event.key == pygame.K_SPACE:
+                    dash_up == True
+        return quit, up, down, left, right, up_up, down_up, left_up, right_up, attack, dash, dash_up
