@@ -22,14 +22,18 @@ class Player(pygame.sprite.Sprite):
         self.movey = 0
         self.rect.x = 100
         self.rect.y = 100
-        """ Initialize with a name.  Rolls dice for ST/IN"""
+        """ Initialize with a name. """
         self.name = name
-        self.health = 50
         self.weapon = False
         self.gold = 0
+        """ Health bar"""
+        self.current_health = 100
+        self.max_health = 100
+        self.health_bar_length = 400
+        self.health_ratio = self.max_health / self.health_bar_length
 
     def __str__(self):
-        s = f'{self.name} has HLTH:{self.health}'
+        s = f'{self.name} has HLTH:{self.current_health}'
         if self.weapon:
             s += f'\n  Wielding a {self.weapon.name}'
         return s
@@ -47,24 +51,24 @@ class Player(pygame.sprite.Sprite):
         """atacks a monster"""
         pass
 
-    def isDead(self):
-        pass
+    def get_health(self, value):
+        if self.current_health < self.max_health:
+            self.current_health += value
+        if self.current_health >= self.max_health:
+            self.current_health = self.max_health
 
-    def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
-        self.animating = False
-        self.sprites = []
-        self.sprites.append(pygame.image.load('image/hero_f1.png'))
-        self.sprites.append(pygame.image.load('image/hero_f2.png'))
-        self.sprites.append(pygame.image.load('image/hero_f3.png'))
-        self.current = 0
-        self.image = self.sprites[self.current]
-        self.image.set_colorkey((0, 0, 0))
-        self.rect = self.image.get_rect()
-        self.movex = 0
-        self.movey = 0
-        self.rect.x = 100
-        self.rect.y = 100
+    def get_damage(self, value):
+        if self.current_health > 0:
+            self.current_health -= value
+        if self.current_health <= 0:
+            self.current_health = 0
+
+    def isDead(self):
+        return self.current_health == 0
+
+    def draw_health(self, surface):
+        pygame.draw.rect(surface, (255, 0, 0), (50, 50, int(self.current_health / self.health_ratio), 25))
+        pygame.draw.rect(surface, (255, 255, 255), (50, 50, self.health_bar_length, 25), 4)
 
     def move(self, x, y):
         self.movex += x
@@ -96,7 +100,7 @@ def main():
 def roll_3_dice():
     total = 0
     for _ in range(3):
-        total += random.randrange(1, 7)
+        total += random.randrange(1, 5)
     return total
 
 

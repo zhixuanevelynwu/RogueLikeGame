@@ -1,5 +1,4 @@
 #! /usr/bin/env python3
-''' An demo of our game '''
 import pygame
 import random
 import controller
@@ -15,9 +14,9 @@ def rand_scene(bg_list):
     monster_list = pygame.sprite.Group()
     for i in range(random.randint(3, 6)):
         monster = monsters.Monster(random.randint(
-            40, 600), random.randint(40, 600), 640, 'monster', 0)
+            40, 600), random.randint(40, 600), 'monster', 0)
         monster_list.add(monster)
-    return (background, monster_list, last)
+    return background, monster_list, last
 
 
 def main():
@@ -33,7 +32,7 @@ def main():
     (background, monster_list, last) = rand_scene(bg_list)
 
     # create hero1 and monster, and set monster location
-    hero1 = players.Player()
+    hero1 = players.Player("hero1")
 
     clock = pygame.time.Clock()
 
@@ -79,10 +78,17 @@ def main():
             hero1.end_anim()
 
         hero1.update()
-        pygame.sprite.groupcollide(
-            player_list, monster_list, False, True, collided=pygame.sprite.collide_circle)
+
+        dead_monsters = pygame.sprite.groupcollide(player_list, monster_list, False, True, collided=pygame.sprite.collide_circle)
+
+        if dead_monsters:
+            for mon in dead_monsters.values():
+                hero1.get_damage(mon[0].attack)
+
         surface.blit(background, (0, 0))
         player_list.draw(surface)
+
+        hero1.draw_health(surface)
 
         for m in monster_list:
             m.update(hero1.rect.x, hero1.rect.y)
