@@ -8,7 +8,7 @@ class Hero(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         """ Draw player """
-        self.out_of_pic = False
+        # self.out_of_pic = False
         self.sprites = []
         self.sprites.append(pygame.image.load('image/hero_f1.png'))
         self.sprites.append(pygame.image.load('image/hero_f2.png'))
@@ -28,8 +28,13 @@ class Hero(pygame.sprite.Sprite):
         self.health_ratio = self.max_health / self.health_bar_length
 
     def move(self, x, y):
+
         self.movex += x
         self.movey += y
+
+    def stop(self):
+        self.movex = 0
+        self.movey = 0
 
     def update(self):
         self.rect.x = self.rect.x + self.movex
@@ -39,8 +44,16 @@ class Hero(pygame.sprite.Sprite):
             if self.current >= len(self.sprites):
                 self.current = 0
             self.image = self.sprites[int(self.current)]
-        if self.rect.x > 1024 or self.rect.y > 768:
-            self.out_of_pic = True
+        # go back if touch the boundry
+        if self.rect.x <= 0:                          #Left
+            self.rect.x += 32
+        if self.rect.x >= 1024 - 64:                  #Right
+            self.rect.x -= 32
+        if self.rect.y <= 0:                          #Up
+            self.rect.y += 32
+        if self.rect.y >= 768 - 64:                   #Bottom
+            self.rect.y -= 32
+
 
     def draw_health(self, surface):
         pygame.draw.rect(surface, (255, 0, 0), (50, 50, int(
@@ -63,8 +76,8 @@ def setup_fonts(font_size, bold=False, italic=False):
     ''' Load a font, given a list of preferences
 
         The preference list is a sorted list of strings (should probably be a parameter),
-        provided in a form from the FontBook list. 
-        Any available font that starts with the same letters (lowercased, spaces removed) 
+        provided in a form from the FontBook list.
+        Any available font that starts with the same letters (lowercased, spaces removed)
         as a font in the font_preferences list will be loaded.
         If no font can be found from the preferences list, the pygame default will be returned.
 

@@ -1,5 +1,6 @@
 #! /usr/bin/env python3
 import pygame
+import pygame.mixer
 import random
 import controller
 import time
@@ -34,6 +35,9 @@ def main():
             break
 
         if len(monster_list) == 0:
+            # play switch level sound
+            sls = pygame.mixer.Sound('found_sound/switch_level.wav')
+            sls.play()
             time.sleep(.5)
             (background, monster_list) = rand_scene(bg_list)
 
@@ -47,19 +51,19 @@ def main():
         if up:
             hero1.move(0, -speed)
         if up_up:
-            hero1.move(0, speed)
+            hero1.stop()
         if down:
             hero1.move(0, speed)
         if down_up:
-            hero1.move(0, -speed)
+            hero1.stop()
         if left:
             hero1.move(-speed, 0)
         if left_up:
-            hero1.move(speed, 0)
+            hero1.stop()
         if right:
             hero1.move(speed, 0)
         if right_up:
-            hero1.move(-speed, 0)
+            hero1.stop()
 
         hero1.update()
 
@@ -77,6 +81,9 @@ def main():
         hero1.draw_health(surface)
 
         if attack:
+            # play attack sound
+            attack_sound = pygame.mixer.Sound('found_sound/attack.wav')
+            attack_sound.play()
             text_surface = hero1.attack_monster(collide_monsters, monster_list)
             surface.blit(text_surface, (hero1.rect.x, hero1.rect.y))
 

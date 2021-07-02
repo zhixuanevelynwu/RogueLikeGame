@@ -59,10 +59,6 @@ class Player(playerview.Hero):
     def isDead(self):
         return self.current_health == 0
 
-    def move(self, x, y):
-        self.movex += x
-        self.movey += y
-
 
 def main():
     pass
