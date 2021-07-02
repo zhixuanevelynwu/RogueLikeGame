@@ -51,19 +51,19 @@ def main():
         if up:
             hero1.move(0, -speed)
         if up_up:
-            hero1.stop()
+            hero1.move(0, speed)
         if down:
             hero1.move(0, speed)
         if down_up:
-            hero1.stop()
+            hero1.move(0, -speed)
         if left:
             hero1.move(-speed, 0)
         if left_up:
-            hero1.stop()
+            hero1.move(speed, 0)
         if right:
             hero1.move(speed, 0)
         if right_up:
-            hero1.stop()
+            hero1.move(-speed, 0)
 
         hero1.update()
 

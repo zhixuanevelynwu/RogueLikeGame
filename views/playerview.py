@@ -28,7 +28,6 @@ class Hero(pygame.sprite.Sprite):
         self.health_ratio = self.max_health / self.health_bar_length
 
     def move(self, x, y):
-
         self.movex += x
         self.movey += y
 
@@ -45,15 +44,15 @@ class Hero(pygame.sprite.Sprite):
                 self.current = 0
             self.image = self.sprites[int(self.current)]
         # go back if touch the boundry
-        if self.rect.x <= 0:                          #Left
-            self.rect.x += 32
-        if self.rect.x >= 1024 - 64:                  #Right
-            self.rect.x -= 32
-        if self.rect.y <= 0:                          #Up
-            self.rect.y += 32
-        if self.rect.y >= 768 - 64:                   #Bottom
-            self.rect.y -= 32
-
+        back = 32
+        if self.rect.x <= 0:  # Left
+            self.rect.x += back
+        if self.rect.x >= 1024 - 64:  # Right
+            self.rect.x -= back
+        if self.rect.y <= 0:  # Up
+            self.rect.y += back
+        if self.rect.y >= 768 - 64:  # Bottom
+            self.rect.y -= back
 
     def draw_health(self, surface):
         pygame.draw.rect(surface, (255, 0, 0), (50, 50, int(
