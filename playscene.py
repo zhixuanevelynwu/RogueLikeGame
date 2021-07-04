@@ -84,17 +84,18 @@ def main():
 
         hero1.draw_health(surface)
 
-        if attack or attack_frame > 0:
-            # play attack sound
-            if attack_frame == 0:
-                attack_sound = pygame.mixer.Sound('found_sound/attack.wav')
-            # attack animation
-            attack_frame += 1
-            if attack_frame == 20:
-                attack_frame = 0
+        # play attack sound
+        if attack:
+            attack_sound = pygame.mixer.Sound('found_sound/attack.wav')
             attack_sound.play()
             (text_surface, damage_list) = hero1.attack_monster(
                 collide_monsters, monster_list)
+
+        if attack or attack_frame > 0:
+            # attack animation
+            attack_frame += 1
+            if attack_frame == 25:
+                attack_frame = 0
             surface.blit(text_surface, (hero1.rect.x, hero1.rect.y))
             for d in damage_list:
                 surface.blit(d[0], (d[1] + 5, d[2] - 30))
