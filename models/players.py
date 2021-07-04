@@ -37,12 +37,16 @@ class Player(playerview.Hero):
     def attack_monster(self, collide_monsters, monster_list):
         """attacks a monster"""
         self.frame_count = 0
+        damage_list = []
         for mon in collide_monsters.values():
             for monster in mon:
-                monster.health -= self.attack
+                damage = self.attack + random.randint(-1, 3)
+                monster.health -= damage
+                damage_list.append((monster.vis_take_damage(
+                    True, damage), monster.rect.x, monster.rect.y))
                 if monster.health <= 0:
                     monster_list.remove(monster)
-        return self.vis_attack(True)
+        return (self.vis_attack(True), damage_list)
 
     def get_health(self, value):
         if self.current_health < self.max_health:
