@@ -142,7 +142,6 @@ def setup_fonts(font_size, bold=False, italic=False):
              if x.startswith(pref)
              ]
         if a:
-            # SysFont expects a string with font names in it
             fonts = ','.join(a)
             return pygame.font.SysFont(fonts, font_size, bold, italic)
     return pygame.font.SysFont(None, font_size, bold, italic)
