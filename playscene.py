@@ -42,8 +42,6 @@ def main():
     frame_count = 0
     attack_frame = 0
     icon_index = 0
-    randx = random.randint(-60, 60)
-    randy = random.randint(-30, 30)
 
     item_list = pygame.sprite.Group()
     """game loop"""
@@ -120,11 +118,7 @@ def main():
                 surface.blit(d[0], (d[1] + 5, d[2] - 30))
 
         for m in monster_list:
-            if frame_count == 20:
-                randx = random.randint(-60, 60)
-                randy = random.randint(-30, 30)
-            m.update(hero1.rect.x + randx,
-                     hero1.rect.y + randy)
+            m.update(hero1.rect.x + 20, hero1.rect.y + 20)
             m.rect.x = m.x
             m.rect.y = m.y
 
