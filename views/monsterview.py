@@ -9,16 +9,46 @@ class Enemy(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.race = race
         self.sprites = []
+        self.spritesl = []
+        '''animation update speed'''
+        self.updateSpeed = 0.09
         if self.race == "slime":
-            self.sprites.append(pygame.image.load('image/slime_monster.png'))
-            self.sprites.append(pygame.image.load('image/slime_monsterl.png'))
-        elif self.race == "eyeball":
-            self.sprites.append(pygame.image.load('image/eyeball_monster.png'))
+            self.updateSpeed = 0.07
             self.sprites.append(pygame.image.load(
-                'image/eyeball_monsterl.png'))
+                'image/monsters/slime/slime_r0.png'))
+            self.sprites.append(pygame.image.load(
+                'image/monsters/slime/slime_r1.png'))
+            self.sprites.append(pygame.image.load(
+                'image/monsters/slime/slime_r2.png'))
+            self.sprites.append(pygame.image.load(
+                'image/monsters/slime/slime_r3.png'))
+            self.spritesl.append(pygame.image.load(
+                'image/monsters/slime/slime_l0.png'))
+            self.spritesl.append(pygame.image.load(
+                'image/monsters/slime/slime_l1.png'))
+            self.spritesl.append(pygame.image.load(
+                'image/monsters/slime/slime_l2.png'))
+            self.spritesl.append(pygame.image.load(
+                'image/monsters/slime/slime_l3.png'))
+        elif self.race == "eyeball":
+            self.sprites.append(pygame.image.load(
+                'image/monsters/eyeball/eyeball_r0.png'))
+            self.sprites.append(pygame.image.load(
+                'image/monsters/eyeball/eyeball_r1.png'))
+            self.sprites.append(pygame.image.load(
+                'image/monsters/eyeball/eyeball_r2.png'))
+            self.sprites.append(pygame.image.load(
+                'image/monsters/eyeball/eyeball_r3.png'))
+            self.spritesl.append(pygame.image.load(
+                'image/monsters/eyeball/eyeball_l0.png'))
+            self.spritesl.append(pygame.image.load(
+                'image/monsters/eyeball/eyeball_l1.png'))
+            self.spritesl.append(pygame.image.load(
+                'image/monsters/eyeball/eyeball_l2.png'))
+            self.spritesl.append(pygame.image.load(
+                'image/monsters/eyeball/eyeball_l3.png'))
         self.current = 0
         self.image = self.sprites[self.current]
-        self.image.set_colorkey((0, 0, 0))
         self.rect = self.image.get_rect()
         self.x = self.rect.x
         self.y = self.rect.y
@@ -27,27 +57,31 @@ class Enemy(pygame.sprite.Sprite):
         self.restricty = 0
         self.rand_point_x = random.randint(-20, 20)
         self.rand_point_y = random.randint(-10, 10)
+        self.seed_x = random.randint(-15, 15)
+        self.seed_y = random.randint(-10, 10)
 
     def setPlayGround(self, x, y):
         self.restrictx = x
         self.restricty = y
 
     def walk(self, x, y):
-        x += 30
-        y += 30
+        x += self.seed_x
+        y += self.seed_y
         distx = self.x - x
         disty = self.y - y
         diagonal_dist = math.sqrt(distx**2 + disty**2)
-        if distx < 0:
-            self.current = 0
+        if distx >= 0:
+            self.current = (
+                self.current + self.updateSpeed) % len(self.spritesl)
+            self.image = self.spritesl[int(self.current)]
         else:
-            self.current = 1
-        self.image = self.sprites[int(self.current)]
+            self.current = (
+                self.current + self.updateSpeed) % len(self.sprites)
+            self.image = self.sprites[int(self.current)]
         if diagonal_dist < 300:
             self.approach(distx, disty)
         else:
             self.stroll(x, y)
-        #self.approach(distx, disty)
 
     def approach(self, distx, disty):
         back = 32

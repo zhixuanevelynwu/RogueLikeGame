@@ -12,17 +12,19 @@ class Player(playerview.Hero):
         """ Initialize with a name. """
         self.name = name
         self.attack = random.randrange(1, 5)
-        # weapon is temporarily set to sword by default for easier development.
         self.weapon = weapons.Sword()
+        self.attack += self.weapon.attack
         self.interval = 3
         self.frame_count = self.interval
-        self.attack += self.weapon.attack
         self.gold = 0
 
     def __str__(self):
-        s = f'{self.name} has HLTH:{self.current_health}'
+        s = f'{self.name} has HLTH:{self.current_health}/{self.max_health}'
+        s += f'\n ATTK:{self.attack}'
+        '''
         if self.weapon:
             s += f'\n  Wielding a {self.weapon.name}'
+        '''
         return s
 
     def get_gold(self, gold):
@@ -49,9 +51,9 @@ class Player(playerview.Hero):
         return (self.vis_attack(True), damage_list)
 
     def get_health(self, value):
-        if self.current_health < self.max_health:
+        if self.current_health + value <= self.max_health:
             self.current_health += value
-        if self.current_health >= self.max_health:
+        else:
             self.current_health = self.max_health
 
     def get_damage(self, value):

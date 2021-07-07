@@ -23,6 +23,7 @@ class KeyEvents:
         up_up = down_up = left_up = right_up = False
         attack = False
         dash = dash_up = False
+        next = False
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 quit = True
@@ -43,6 +44,8 @@ class KeyEvents:
                     attack = True
                 if event.key == pygame.K_SPACE:
                     dash = True
+                if event.key == pygame.K_RETURN:
+                    next = True
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_w:
                     up_up = True
@@ -56,4 +59,4 @@ class KeyEvents:
                     attack = False
                 if event.key == pygame.K_SPACE:
                     dash_up == True
-        return quit, up, down, left, right, up_up, down_up, left_up, right_up, attack, dash, dash_up
+        return quit, up, down, left, right, up_up, down_up, left_up, right_up, attack, dash, dash_up, next

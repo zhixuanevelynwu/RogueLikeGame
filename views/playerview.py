@@ -28,7 +28,7 @@ class Hero(pygame.sprite.Sprite):
         self.current_health = 100
         self.max_health = 100
         self.health_bar_length = 400
-        self.health_ratio = self.max_health / self.health_bar_length
+        self.health_ratio = self.health_bar_length / self.max_health
         """ Play ground """
         self.restrictx = 1024
         self.restricty = 0
@@ -74,9 +74,11 @@ class Hero(pygame.sprite.Sprite):
 
     def draw_health(self, surface):
         pygame.draw.rect(surface, (255, 0, 0), (50, 50, int(
-            self.current_health / self.health_ratio), 25))
+            self.current_health / self.max_health * self.health_bar_length), 25))
         pygame.draw.rect(surface, (255, 255, 255),
                          (50, 50, self.health_bar_length, 25), 4)
+        font = setup_fonts(18)
+        return font.render(f"Health: {int(self.current_health)}/{self.max_health}", True, (255, 255, 255))
 
     def vis_attack(self, vis):
         black = (0, 0, 0)

@@ -7,7 +7,7 @@ from views import monsterview
 
 class Monster(monsterview.Enemy):
 
-    def __init__(self, x, y, race, gold, health, interval, vel):
+    def __init__(self, x, y, race, gold, health, attack, interval, vel):
         '''
             interval - how many frames a monster wait to make the next attack
             frame_count - count the number of frames that has already passed
@@ -17,11 +17,11 @@ class Monster(monsterview.Enemy):
         self.y = y
         self.vel = vel
         self.race = race
-        self.attack = roll_3_dice()
+        self.attack = attack + roll_1_dice()
         self.health = health
         self.gold = gold
         self.interval = interval
-        self.frame_count = self.interval - 5
+        self.frame_count = self.interval - 20
 
     def __str__(self):
         s = f'Monster {self.race} with ATK:{self.attack} HLTH:{self.health}'
@@ -45,7 +45,7 @@ class Eyeball(Monster):
 
     def __init__(self):
         Monster.__init__(self, random.randint(
-            40, 1020), random.randint(450, 650), "eyeball", 5, 20, 70, 1)
+            40, 1020), random.randint(450, 650), "eyeball", 5, 50, 7, 70, 1)
         self.yell = '"SsSsSSss"'
 
     def __str__(self):
@@ -59,7 +59,7 @@ class Slime(Monster):
 
     def __init__(self):
         Monster.__init__(self, random.randint(
-            40, 1020), random.randint(450, 650), "slime", 6, 30, 80, .5)
+            40, 1020), random.randint(450, 650), "slime", 6, 60, 5, 80, .5)
         self.yell = '"#%@&$/?!"'
 
     def __str__(self):
@@ -73,7 +73,7 @@ class Ooze(Monster):
 
     def __init__(self):
         Monster.__init__(self, random.randint(
-            40, 1020), random.randint(450, 650), "ooze", 3, 15, 30, .7)
+            40, 1020), random.randint(450, 650), "ooze", 3, 15, 13, 30, .7)
         self.yell = '"......"'
 
     def __str__(self):
@@ -83,11 +83,8 @@ class Ooze(Monster):
 """ end monster classes """
 
 
-def roll_3_dice():
-    total = 0
-    for _ in range(3):
-        total += random.randrange(1, 3)
-    return total
+def roll_1_dice():
+    return random.randrange(1, 6)
 
 
 def main():
