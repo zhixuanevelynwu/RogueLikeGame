@@ -1,10 +1,13 @@
+#! /usr/bin/env python3
 import random
 import pygame
+from views import weaponview
 
 
-class Weapon():
+class Weapon(weaponview.Arms):
 
     def __init__(self, type, attack, cooldown):
+        weaponview.Arms.__init__(self, type)
         '''
             type - type of the weapon(e.g. sword)
             attack - damage a weapon causes
@@ -18,9 +21,9 @@ class Weapon():
         pass
 
 
-class Sword():
+class Sword(Weapon):
     def __init__(self):
-        Weapon.__init__(self, "sword", 5, 2)
+        Weapon.__init__(self, "sword1", 5, 2)
 
 
 class Arrow():

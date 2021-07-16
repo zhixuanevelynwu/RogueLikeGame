@@ -24,6 +24,7 @@ class Hero(pygame.sprite.Sprite):
         self.movey = 0
         self.rect.x = 100
         self.rect.y = 500
+        self.left = (self.movex < 0)
         """ Health bar"""
         self.current_health = 100
         self.max_health = 100
@@ -56,10 +57,12 @@ class Hero(pygame.sprite.Sprite):
         if self.movex > 0 or self.movey != 0:
             if self.current >= len(self.sprites):
                 self.current = 0
+                self.left = False
             self.image = self.sprites[int(self.current)]
         if self.movex < 0:
             if self.current >= len(self.spritesl):
                 self.current = 0
+                self.left = True
             self.image = self.spritesl[int(self.current)]
         # go back if touch the boundry
         back = 32
@@ -101,16 +104,7 @@ class Hero(pygame.sprite.Sprite):
 
 
 def setup_fonts(font_size, bold=False, italic=False):
-    ''' Load a font, given a list of preferences
 
-        The preference list is a sorted list of strings (should probably be a parameter),
-        provided in a form from the FontBook list.
-        Any available font that starts with the same letters (lowercased, spaces removed)
-        as a font in the font_preferences list will be loaded.
-        If no font can be found from the preferences list, the pygame default will be returned.
-
-        returns -- A Font object
-    '''
     font_preferences = ['Bangers', 'Iosevka Regular',
                         'Comic Sans', 'Courier New']
     available = pygame.font.get_fonts()

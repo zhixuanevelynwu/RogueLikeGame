@@ -45,7 +45,7 @@ class Eyeball(Monster):
 
     def __init__(self):
         Monster.__init__(self, random.randint(
-            40, 1020), random.randint(450, 650), "eyeball", 5, 50, 7, 70, 1)
+            40, 1020), random.randint(450, 650), "eyeball", 5, 30, 6, 70, 1)
         self.yell = '"SsSsSSss"'
 
     def __str__(self):
@@ -59,7 +59,7 @@ class Slime(Monster):
 
     def __init__(self):
         Monster.__init__(self, random.randint(
-            40, 1020), random.randint(450, 650), "slime", 6, 60, 5, 80, .5)
+            40, 1020), random.randint(450, 650), "slime", 6, 35, 5, 80, .5)
         self.yell = '"#%@&$/?!"'
 
     def __str__(self):

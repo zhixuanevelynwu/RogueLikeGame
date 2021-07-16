@@ -1,14 +1,6 @@
 import pygame
 
 
-class Collision:
-    '''
-        Collision class
-            implements functions relevant to collision checking
-    '''
-    pass
-
-
 class KeyEvents:
     '''
         KeyEvents class
